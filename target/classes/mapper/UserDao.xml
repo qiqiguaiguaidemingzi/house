@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lin.dao.UserDao">
+	<select id="loginValidate" resultType="User">
+		select * from userinfo
+			where acc = #{acc} 
+	</select>
+	
+	<insert id="registerAccount" parameterType="User">
+		insert ignore into userinfo(acc,psd,realName,email)
+			values (#{user.acc},#{user.psd},#{user.realName},#{user.email})
+	</insert>
+	
+	<update id="psdChange">
+		update userinfo set psd = #{newp}
+			where acc = #{acc} and psd = #{oldp}
+	</update>
+	
+	<insert id="lendHouse" parameterType="HouseInfo" useGeneratedKeys="true" keyProperty="houseNum">
+		insert into houseinfo(houseName,price,address,area,message,type,acc,manager)
+			values (#{houseName},#{price},#{address},#{area},#{message},#{type},#{acc},"xxx")
+	</insert>
+	
+	<update id="copyPicture">
+		update houseinfo set imgUrl = #{imgUrl}
+			where houseNum = #{houseNum}
+	</update>
+	
+	<select id="getUserHouse" resultType="CheckHouseState">
+		select houseNum,houseName,state from houseinfo
+			where acc = #{acc}
+	</select>
+	
+	<update id="userDropHouse">
+		update houseinfo set state = 3 
+			where houseNum = #{houseNum}
+	</update>
+	
+</mapper>

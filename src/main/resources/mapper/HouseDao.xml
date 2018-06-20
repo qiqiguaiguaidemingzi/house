@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lin.dao.HouseDao">
+	<select id="initHouse" resultType="HouseInfo">
+		select * from houseinfo where state = 2;
+	</select>
+	
+	<select id="filterBySelect" parameterType="Filter" resultType="HouseInfo">
+		select * from houseinfo 
+		<where>
+			state = 2 
+			<if test="!price.equals('any')">
+				and price > #{one} 
+				<if test="two != -1"> and price <![CDATA[ <= ]]> #{two}</if>
+			</if>
+			<if test="!area.equals('any')">
+				and area > #{three} 
+				<if test="four != -1"> and area <![CDATA[ <= ]]> #{four}</if>
+			</if>
+			<if test="!type.equals('any')">
+				<if test="!type.equals('else')"> and type like '' #{type} '%'</if>
+				<if test="type.equals('else')"> and type not like '1%' and type not like '2%' and type not like '3%' </if>
+			</if>
+		</where>
+	</select>
+	
+	<select id="houseDeatilMsg" resultType="HouseInfo">
+		select * from houseinfo 
+		<where>
+			houseNum = #{houseNum}
+		</where>
+	</select>
+	
+	<select id="filterByWord" resultType="HouseInfo">
+		select * from houseinfo
+		<where>
+			state = 2 and houseName like '%' #{word} '%' or address like '%' #{word} '%'
+		</where>
+	</select>
+	
+</mapper>
