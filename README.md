@@ -7,7 +7,7 @@
 
 此外还有一个主要点，本系统当用户上架出租房屋时，因为需要上传房屋图片，房屋图片是存放在本地磁盘的。
 所以需要改变UserController中copyPicture()方法中的本地路径，同时在Tomcat服务器的server.xml中以下标签：
-<Context docBase="你的本地磁盘路径" path="/house/assets/copy"/>
+“<Context docBase="你的本地磁盘路径" path="/house/assets/copy"/>”（去掉中文双引号）
 
 本项目属于为了熟悉SSM框架才创建的，可能有很多不足，请多指正，谢谢！
 今后继续努力！！！
